@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.led-screen {
+    width: 1152px;
+    height: 576px;
+    position: relative;
+    background: linear-gradient(180deg, #111A4D 0%, #030A26 100%);
+    overflow: hidden;
+}
+
+/* --- Основной контейнер для видео --- */
+.video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Начальный размер F3 */
+    height: 100%;
+    /* 552px */
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+    border-radius: 10px;
+    z-index: 2;
+    /* Видео поверх виджетов */
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- Классы для изменения размера видео --- */
+/* F1: 846x552 */
+.led-screen.size-f1 .video-wrapper {
+    width: 846px;
+    height: 552px;
+    top: 12px;
+    left: 12px;
+}
+
+/* F2: 552x552 */
+.led-screen.size-f2 .video-wrapper {
+    width: 552px;
+    height: 552px;
+    top: 12px;
+    left: 12px;
+}
+
+/* F3: 1128x552 */
+.led-screen.size-f3 .video-wrapper {
+    width: 1128px;
+    height: 552px;
+    top: 12px;
+    left: 12px;
+}
+
+/* --- Контейнер для виджетов справа от видео --- */
+.widgets-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    transition: opacity 0.5s ease-in-out;
+    gap: 12px;
+    z-index: 1;
+    /* Виджеты позади видео */
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+/* --- Скрытие виджетов --- */
+.widgets-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Базовые стили для виджетов --- */
+.widget {
+    background: #000;
+    color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* --- Стили для виджета погоды (независимые) --- */
+.weather-widget {
+    width: 270px;
+    height: 270px;
+    background: #000;
+    /* Фон погоды */
+    color: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Уникальные стили погоды */
+    background: rgba(30, 30, 46, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Стили внутри виджета погоды --- */
+.weather-header {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.weather-temp {
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.weather-icon {
+    font-size: 36px;
+    filter: drop-shadow(0 4px 8px rgba(255, 193, 7, 0.3));
+}
+
+.weather-date {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 12px;
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px;
+    width: 100%;
+}
+
+.weather-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+}
+
+/* --- Стили для виджета курсов валют (независимые) --- */
+.currency-widget {
+    width: 270px;
+    height: 270px;
+    background: #007bff;
+    /* Синий фон для валют */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 12px;
+    /* Уникальные стили валют */
+}
+
+/* Внутри .currency-widget */
+.currency-header {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.currency-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.currency-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.currency-code {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.currency-value {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* --- Стили для виджета навигации --- */
+.navigation-widget {
+    width: 282px;
+    height: 552px;
+    background: #007bff;
+    /* Синий фон для навигации */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-align: center;
+    padding: 12px;
+}
+
+/* --- Управление видимостью виджетов в зависимости от размера --- */
+/* В F1: Показываем погоду и Курсы валют */
+.led-screen.size-f1 .widgets-container .navigation-widget {
+    display: none !important;
+    /* Скрываем навигацию в F1 */
+}
+
+.led-screen.size-f1 .widgets-container .weather-widget,
+.led-screen.size-f1 .widgets-container .currency-widget {
+    display: flex !important;
+    /* Показываем погоду и курсы в F1 */
+}
+
+/* В F2: Показываем навигацию, погоду, курсы */
+.led-screen.size-f2 .widgets-container .widget {
+    display: flex !important;
+    /* Показываем все виджеты в F2 */
+}
+
+/* В F3: Скрываем все виджеты */
+.led-screen.size-f3 .widgets-container {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Вертикальное расположение виджетов в F1 */
+.led-screen.size-f1 .widgets-container {
+    flex-direction: column;
+}
+
+/* Горизонтальное расположение виджетов в F2 */
+.led-screen.size-f2 .widgets-container {
+    flex-direction: row;
+}
+
+/* Группировка виджетов погоды и валют в F2 для правильного расположения */
+.led-screen.size-f2 .widgets-group-f2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
