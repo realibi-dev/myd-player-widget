@@ -17,9 +17,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      getPlaylsit();
-    }, 1000 * 5 * 60)
+    getPlaylsit();
   }, []);
 
   useEffect(() => {
