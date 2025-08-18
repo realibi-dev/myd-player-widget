@@ -3,9 +3,7 @@ const ROLLS = [
     // Ролик 1: F1 -> F2 -> F3
     [{ frame: 'f1', duration: 5500 }, { frame: 'f2', duration: 5500 }, { frame: 'f3', duration: 2500 }],
     // Ролик 2: F3 -> F2 -> F1
-    [{ frame: 'f3', duration: 2500 }, { frame: 'f2', duration: 5500 }, { frame: 'f1', duration: 5500 }],
-    // Ролик 3: F1 -> F2 -> F3
-    [{ frame: 'f1', duration: 5500 }, { frame: 'f2', duration: 5500 }, { frame: 'f3', duration: 2500 }]
+    [{ frame: 'f3', duration: 2500 }, { frame: 'f2', duration: 5500 }, { frame: 'f1', duration: 5500 }]
 ];
 
 // --- DOM элементы ---
