@@ -104,3 +104,72 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
+
+// --- Получение данных о погоде ---
+async function fetchWeatherData() {
+    try {
+        const apiKey = 'b174b9ef33db473cbbe74811251807';
+        const city = 'Тараз'; // Город Тараз
+        // Запрашиваем текущую погоду
+        const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (response.ok) {
+            const now = new Date();
+            // 1. Обновляем время
+            const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('weather-time').textContent = timeString;
+
+            // 2. Обновляем дату
+            const dateString = now.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
+            // Делаем первую букву заглавной
+            const capitalizedDateString = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+            document.getElementById('weather-date').textContent = capitalizedDateString;
+
+            // 3. Обновляем текущую погоду
+            const current = data.current;
+            const temp = current.temp_c;
+            // Используем иконку из API
+            document.getElementById('weather-temp-main').textContent = `${temp}°`;
+            // Создаем тег img для иконки
+            const iconUrl = current.condition.icon;
+            document.getElementById('weather-icon-main').innerHTML = `<img src="https:${iconUrl}" alt="${current.condition.text}">`;
+        } else {
+            console.error('Ошибка получения данных о погоде:', data.error.message);
+            // В случае ошибки показываем заглушки
+            document.getElementById('weather-time').textContent = '--:--';
+            document.getElementById('weather-date').textContent = 'Ошибка загрузки';
+            document.getElementById('weather-temp-main').textContent = '--°';
+            document.getElementById('weather-icon-main').textContent = '?';
+        }
+    } catch (error) {
+        console.error('Ошибка получения данных о погоде:', error);
+        // В случае ошибки сети показываем заглушки
+        document.getElementById('weather-time').textContent = '--:--';
+        document.getElementById('weather-date').textContent = 'Ошибка сети';
+        document.getElementById('weather-temp-main').textContent = '--°';
+        document.getElementById('weather-icon-main').textContent = '?';
+    }
+}
+// Автоматическое обновление времени каждую минуту
+function updateTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('weather-time').textContent = timeString;
+}
+// --- Инициализация ---
+function init() {
+    ledScreen.classList.add('size-f3');
+    fetchExchangeRates();
+    // Получаем погоду и устанавливаем таймеры
+    fetchWeatherData();
+    setInterval(fetchWeatherData, 300000); // Каждые 5 минут обновляем погоду
+    updateTime();
+    setInterval(updateTime, 60000); // Каждую минуту обновляем время
+    // Запускаем смену кадров
+    setTimeout(() => {
+        nextFrame();
+    }, 100);
+}   

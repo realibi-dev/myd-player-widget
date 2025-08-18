@@ -48,57 +48,60 @@ export default function Home() {
         <div class="video-wrapper">
           <video ref={videoRef} id="videoPlayer" autoPlay muted></video>
         </div>
-        <div class="widgets-container">
-          <div class="widget navigation-widget">
-            <h2>Навигация</h2>
-            <p>• К туалетам</p>
-            <p>• К гейтам</p>
-            <p>• К зоне регистрации</p>
-          </div>
-          <div class="widgets-group-f2">
-            <div class="widget weather-widget">
-              <div class="weather-header">Сегодняшняя погода</div>
-              <div class="weather-main">
-                <div class="weather-temp">23°</div>
-                <div class="weather-icon">⛅</div>
+              <div class="widget navigation-widget>
+                  <div class="nav-image-container>
+                  <img
+                      src="C:\Yernur\MYD\integration\project\nav.png"
+                      alt="Изображение навигации"
+                  />
+                  </div>
               </div>
-              <div class="weather-date">Четверг, 25 апреля</div>
-              <div class="weather-details">
-                <div class="weather-item">
-                  <span>💧</span>
-                  <span>45%</span>
-                </div>
-                <div class="weather-item">
-                  <span>💨</span>
-                  <span>12%</span>
-                </div>
-                <div class="weather-item">
-                  <span>🌪️</span>
-                  <span>8 км/ч</span>
-                </div>
+              <div class="widget weather-widget">
+                  <div class="weather-time" id="weather-time">--:--</div>
+                  <div class="weather-date" id="weather-date">Пятница, 1 января</div>
+                  <div class="weather-main">
+                      <div class="weather-icon-main" id="weather-icon-main">--</div>
+                      <div class="weather-temp-main" id="weather-temp-main">--°</div>
+                  </div>
               </div>
-            </div>
-
-            <div class="widget currency-widget">
-              <div class="currency-header">Курсы валют</div>
-              <div class="currency-list">
-                <div class="currency-item">
-                  <span class="currency-code">KZT/USD</span>
-                  <span class="currency-value" id="usd-rate">---</span>
-                </div>
-                <div class="currency-item">
-                  <span class="currency-code">KZT/RUB</span>
-                  <span class="currency-value" id="rub-rate">---</span>
-                </div>
-                <div class="currency-item">
-                  <span class="currency-code">KZT/CNY</span>
-                  <span class="currency-value" id="cny-rate">---</span>
-                </div>
+              <div class="widget currency-widget">
+                  <div class="currency-header">Курсы валют</div>
+                  <div class="currency-list">
+                      <div class="currency-item">
+                          <div class="currency-info">
+                          <img
+                              src="https://flagcdn.com/w40/us.png"
+                              alt="USD"
+                              class="flag-circle"
+                          />
+                                  <span class="currency-code">KZT/USD</span>
+                          </div>
+                          <span class="currency-value" id="usd-rate">---</span>
+                      </div>
+                      <div class="currency-item">
+                          <div class="currency-info">
+                          <img
+                              src="https://flagcdn.com/w40/ru.png"
+                              alt="RUB"
+                              class="flag-circle"
+                          />
+                                  <span class="currency-code">KZT/RUB</span>
+                          </div>
+                          <span class="currency-value" id="rub-rate">---</span>
+                      </div>
+                      <div class="currency-item">
+                          <div class="currency-info">
+                          <img
+                              src="https://flagcdn.com/w40/cn.png"
+                              alt="CNY"
+                              class="flag-circle"
+                          />
+                                  <span class="currency-code">KZT/CNY</span>
+                          </div>
+                          <span class="currency-value" id="cny-rate">---</span>
+                      </div>
+                  </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <Script 
         src="/script.js"
