@@ -10,7 +10,7 @@ const ROLLS = [
 
 // --- DOM элементы ---
 const ledScreen = document.getElementById('ledScreen');
-const widgetsContainer = document.querySelector('.widgets-container');
+// const widgetsContainer = document.querySelector('.widgets-container');
 
 // --- Состояние ---
 let currentRollIndex = 0;
@@ -42,7 +42,7 @@ function changeFrame(frameKey) {
     isTransitioning = true;
 
     // 1. Начало анимации: убираем виджеты
-    widgetsContainer.classList.add('hidden');
+    // widgetsContainer.classList.add('hidden');
 
     // 2. Через короткую задержку (0.25с) меняем размер
     setTimeout(() => {
@@ -54,7 +54,7 @@ function changeFrame(frameKey) {
 
         // 3. Через оставшееся время анимации (0.25с) показываем виджеты
         setTimeout(() => {
-            widgetsContainer.classList.remove('hidden');
+            // widgetsContainer.classList.remove('hidden');
             isTransitioning = false;
         }, 250);
 
