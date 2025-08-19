@@ -137,18 +137,18 @@ async function fetchWeatherData() {
         } else {
             console.error('Ошибка получения данных о погоде:', data.error.message);
             // В случае ошибки показываем заглушки
-            document.getElementById('weather-time').textContent = '--:--';
-            document.getElementById('weather-date').textContent = 'Ошибка загрузки';
-            document.getElementById('weather-temp-main').textContent = '--°';
-            document.getElementById('weather-icon-main').textContent = '?';
+            // document.getElementById('weather-time').textContent = '--:--';
+            // document.getElementById('weather-date').textContent = 'Ошибка загрузки';
+            // document.getElementById('weather-temp-main').textContent = '--°';
+            // document.getElementById('weather-icon-main').textContent = '?';
         }
     } catch (error) {
         console.error('Ошибка получения данных о погоде:', error);
         // В случае ошибки сети показываем заглушки
-        document.getElementById('weather-time').textContent = '--:--';
-        document.getElementById('weather-date').textContent = 'Ошибка сети';
-        document.getElementById('weather-temp-main').textContent = '--°';
-        document.getElementById('weather-icon-main').textContent = '?';
+        // document.getElementById('weather-time').textContent = '--:--';
+        // document.getElementById('weather-date').textContent = 'Ошибка сети';
+        // document.getElementById('weather-temp-main').textContent = '--°';
+        // document.getElementById('weather-icon-main').textContent = '?';
     }
 }
 // Автоматическое обновление времени каждую минуту

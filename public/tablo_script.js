@@ -7,7 +7,7 @@
         const data = await response.json();
 
         if (!data.success || !data.data || data.data.length === 0) {
-            throw new Error('Данные не найдены');
+            return;
         }
 
         let tableHTML = `
