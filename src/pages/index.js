@@ -41,11 +41,23 @@ export default function Home() {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  let tabloInterval = null;
+
   useEffect(() => {
     console.log("Словили смену плейлиста");
 
     const video = videoRef.current;
-    if (!video || playlist.length === 0) return;
+    if (!video || playlist.length === 0) {
+      setPlaylist([]);
+      video.src = "";
+
+      tabloInterval = setInterval(() => {
+        tabloRef.current.classList.toggle("hidden");
+      }, 10000);
+      return;
+    } else {
+      clearInterval(tabloInterval);
+    }
 
     let index = 0;
 
