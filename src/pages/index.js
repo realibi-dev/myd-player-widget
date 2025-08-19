@@ -7,48 +7,34 @@ export default function Home() {
 
   const [playlist, setPlaylist] = useState([]);
 
-  const getPlaylist = async () => {
-    try {
+  useEffect(() => {
+    const interval = setInterval(async () => {
       const response = await fetch("/config/playlist.json");
-      if (!response.ok) {
-        console.log("error while reading playlist");
-        setPlaylist([]);
-        return;
-      }
+      if (!response.ok) return;
 
       const newPlaylist = await response.json();
+      const paths = newPlaylist.map(obj => obj.path);
 
       let isPlaylistDifferent = false;
 
-      if (playlist.length !== newPlaylist.length) {
-        console.log("dlina raznaya", playlist.length, newPlaylist.length);
+      if (playlist.length !== paths.length) {
         isPlaylistDifferent = true;
-      }
-      for (let i = 0; i < playlist.length; i++) {
-        if (playlist[i] !== newPlaylist[i].path) {
-          console.log("raznica", playlist[i], newPlaylist[i].path);
-          isPlaylistDifferent = true;
+      } else {
+        for (let i = 0; i < playlist.length; i++) {
+          if (playlist[i] !== paths[i]) {
+            isPlaylistDifferent = true;
+            break;
+          }
         }
       }
 
       if (isPlaylistDifferent) {
-        console.log("Плейлист изменился, обновляем:", newPlaylist);
-        setPlaylist(newPlaylist.map(obj => obj.path));
-      } else {
-        console.log("Плейлист не изменился");
+        setPlaylist(paths);
       }
+    }, 10000);
 
-    } catch (error) {
-      console.error("Ошибка при загрузке плейлиста:", error);
-      setPlaylist([]);
-    }
-  };
-
-  useEffect(() => {
-    setInterval(() => {
-      getPlaylist();
-    }, 1000 * 10);
-  }, []);
+    return () => clearInterval(interval);
+  }, [playlist]); // теперь эффект пересоздаётся при обновлении
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
