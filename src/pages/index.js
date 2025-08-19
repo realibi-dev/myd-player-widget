@@ -56,8 +56,10 @@ export default function Home() {
         if (index % 2 === 0) {
           console.log("showing tablo");
           tabloRef.current.classList.remove("hidden");
-          tabloRef.current.classList.add("hidden");
-          console.log("removing tablo");
+          sleep(10000).then(() => {
+            tabloRef.current.classList.add("hidden");
+            console.log("removing tablo");
+          });
         }
 
         // Переход к следующему видео
