@@ -14,7 +14,11 @@ export default function Home() {
       if (!response.ok) return;
 
       const newPlaylist = await response.json();
-      const paths = newPlaylist.map(obj => obj.path);
+      let paths = newPlaylist.map(obj => obj.path);
+
+      if (paths.length === 0) {
+        paths.push("/opt/citydash/media/placeholder.mp4");
+      }
 
       let isPlaylistDifferent = false;
 
@@ -30,7 +34,7 @@ export default function Home() {
       }
 
       if (isPlaylistDifferent) {
-        setPlaylist(paths.length > 0 ? paths : ["/opt/citydash/media/placeholder.mp4"]);
+        setPlaylist(paths);
       }
     }, 500);
 
