@@ -31,7 +31,7 @@ export default function Home() {
       if (isPlaylistDifferent) {
         setPlaylist(paths);
       }
-    }, 10000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [playlist]); // теперь эффект пересоздаётся при обновлении
