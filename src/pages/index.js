@@ -20,9 +20,13 @@ export default function Home() {
 
       let isPlaylistDifferent = false;
 
-      if (playlist.length !== newPlaylist.length) isPlaylistDifferent = true;
+      if (playlist.length !== newPlaylist.length) {
+        console.log("dlina raznaya");
+        isPlaylistDifferent = true;
+      }
       for (let i = 0; i < playlist.length; i++) {
         if (playlist[i] !== newPlaylist[i].path) {
+          console.log("raznica", playlist[i], newPlaylist[i].path);
           isPlaylistDifferent = true;
         }
       }
