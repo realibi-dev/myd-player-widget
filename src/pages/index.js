@@ -1,6 +1,5 @@
 import Script from "next/script";
 import {useEffect, useRef, useState} from "react";
-import {setTimeout} from "next/dist/compiled/@edge-runtime/primitives";
 
 export default function Home() {
   const videoRef = useRef(null);
