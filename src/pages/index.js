@@ -52,6 +52,7 @@ export default function Home() {
 
       if (playlist[index]) {
         videoRef.current.addEventListener("ended", async () => {
+          await sleep(5000);
           if (index % 2 === 0) {
             console.log("showing tablo");
             tabloRef.current.classList.remove("hidden");
