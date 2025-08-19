@@ -50,6 +50,7 @@ export default function Home() {
 
     const onEnded = async () => {
       console.log("Видео закончилось, ждем 5 секунд...");
+      video.pause();
       if (index % 2 === 0) {
         console.log("showing tablo");
         tabloRef.current.classList.remove("hidden");
