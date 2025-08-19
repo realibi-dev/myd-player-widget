@@ -40,7 +40,7 @@ export default function Home() {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log("Словили смену плейлиста");
 
     const video = videoRef.current;
@@ -49,9 +49,6 @@ export default function Home() {
     let index = 0;
 
     const onEnded = async () => {
-      console.log("Видео закончилось, ждем 5 секунд...");
-      await sleep(5000);
-
       if (index % 2 === 0) {
         console.log("showing tablo");
         tabloRef.current.classList.remove("hidden");
@@ -69,14 +66,13 @@ export default function Home() {
 
       console.log("Следующее видео:", playlist[index]);
       video.src = playlist[index];
-      video.load();
       video.play();
     };
 
     // Ставим первое видео
     video.src = playlist[index];
-    video.load();
-    video.play();
+    sleep(5000).then(() => video.play());
+
 
     // Подписка на событие
     video.addEventListener("ended", onEnded);
