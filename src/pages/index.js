@@ -21,7 +21,7 @@ export default function Home() {
       let isPlaylistDifferent = false;
 
       if (playlist.length !== newPlaylist.length) {
-        console.log("dlina raznaya");
+        console.log("dlina raznaya", playlist.length, newPlaylist.length);
         isPlaylistDifferent = true;
       }
       for (let i = 0; i < playlist.length; i++) {
