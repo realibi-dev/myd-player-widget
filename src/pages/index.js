@@ -7,128 +7,43 @@ export default function Home() {
 
   const [playlist, setPlaylist] = useState([]);
 
-  const getPlaylist2 = async () => {
-  try {
-    const response = await fetch("/config/playlist.json");
-    if (!response.ok) {
-      console.log("error while reading playlist");
-      return; // ← Не сбрасываем плейлист при ошибке сети
-    }
-    
-    const newPlaylist = await response.json();
-    
-    // ✅ Проверяем все файлы параллельно (быстрее чем по очереди)
-    const fileChecks = await Promise.all(
-      newPlaylist.map(async (obj) => {
-        try {
-          const fileResponse = await fetch(obj.path, { method: 'HEAD' });
-          return fileResponse.ok ? obj.path : null;
-        } catch (error) {
-          console.log(`Файл недоступен: ${obj.path}`);
-          return null;
-        }
-      })
-    );
-    
-    // Оставляем только существующие файлы
-    const validPaths = fileChecks.filter(path => path !== null);
-    
-    if (validPaths.length === 0) {
-      console.log("Нет доступных файлов в плейлисте");
-      return; // ← Не сбрасываем плейлист, оставляем старый
-    }
-    
-    // ✅ Точное сравнение массивов
-    const arraysEqual = (a, b) => {
-      if (a.length !== b.length) return false;
-      return a.every((val, index) => val === b[index]);
-    };
-    
-    // Сравниваем с текущим плейлистом
-    if (!arraysEqual(playlist, validPaths)) {
-      console.log("Плейлист изменился:", {
-        old: playlist.length,
-        new: validPaths.length
-      });
-      setPlaylist(validPaths);
-    } else {
-      console.log("Плейлист идентичен, обновление не нужно");
-    }
-    
-  } catch (error) {
-    console.error("Ошибка при загрузке плейлиста:", error);
-    // ← Не сбрасываем плейлист при ошибке
-  }
-};
-
   const getPlaylist = async () => {
-  try {
-    const response = await fetch("/config/playlist.json");
-    if (!response.ok) {
-      console.log("error while reading playlist");
-      setPlaylist([]);
-      return;
-    }
-    
-    const newPlaylist = await response.json();
-    console.log("Загружен playlist из JSON:", newPlaylist);
+    try {
+      const response = await fetch("/config/playlist.json");
+      if (!response.ok) {
+        console.log("error while reading playlist");
+        setPlaylist([]);
+        return;
+      }
 
-    // Проверяем доступность всех файлов
-    const fileChecks = await Promise.all(
-      newPlaylist.map(async (obj) => {
-        try {
-          const response = await fetch(obj.path, { method: 'HEAD' });
-          return { ...obj, exists: response.ok };
-        } catch {
-          return { ...obj, exists: false };
-        }
-      })
-    );
+      const newPlaylist = await response.json();
 
-    // Оставляем только существующие файлы
-    const validFiles = fileChecks.filter(file => file.exists);
-    
-    if (validFiles.length === 0) {
-      console.log("Нет доступных файлов в плейлисте");
-      setPlaylist([]);
-      return;
-    }
+      let isPlaylistDifferent = false;
 
-    // Сравниваем плейлисты
-    const newPlaylistPaths = validFiles.map(obj => obj.path);
-    const currentPaths = playlist; // предполагаем что playlist уже содержит пути
-    
-    let isPlaylistDifferent = false;
-    
-    if (currentPaths.length !== newPlaylistPaths.length) {
-      isPlaylistDifferent = true;
-    } else {
-      for (let i = 0; i < currentPaths.length; i++) {
-        if (newPlaylistPaths[i] !== currentPaths[i]) {
+      if (playlist.length !== newPlaylist.length) isPlaylistDifferent = true;
+      for (let i = 0; i < playlist.length; i++) {
+        if (playlist[i] !== newPlaylist[i].path) {
           isPlaylistDifferent = true;
-          break;
         }
       }
-    }
 
-    // ✅ Обновляем состояние только если есть изменения
-    if (isPlaylistDifferent) {
-      console.log("Плейлист изменился, обновляем:", newPlaylistPaths);
-      setPlaylist(newPlaylistPaths); // ← Исправлено
-    } else {
-      console.log("Плейлист не изменился");
+      if (isPlaylistDifferent) {
+        console.log("Плейлист изменился, обновляем:", newPlaylist);
+        setPlaylist(newPlaylist.map(obj => obj.path));
+      } else {
+        console.log("Плейлист не изменился");
+      }
+
+    } catch (error) {
+      console.error("Ошибка при загрузке плейлиста:", error);
+      setPlaylist([]);
     }
-    
-  } catch (error) {
-    console.error("Ошибка при загрузке плейлиста:", error);
-    setPlaylist([]);
-  }
-};
+  };
 
   useEffect(() => {
     setInterval(() => {
-        getPlaylist2();
-    }, 1000*3);
+      getPlaylist();
+    }, 1000 * 3);
   }, []);
 
   function sleep(ms) {
