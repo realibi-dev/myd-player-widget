@@ -6,18 +6,20 @@ export default function Home() {
 
   const [playlist, setPlaylist] = useState([]);
 
-  const getPlaylsit = async () => {
-    const DEVICE_UUID = "00000000-deb9-49a3-8b2c-edf603d8e825";
-    const FOLDER = "/media";
-    const response = await fetch(`http://192.168.20.99:8000/api/v2/playlist?uuid=${DEVICE_UUID}`);
-    const data = await response.json();
-    const newPlaylist = data.playlist[0].mediafiles.map(media => `${FOLDER}/${media.uuid}`);
-    setPlaylist(newPlaylist);
-    console.log("Установили новый плейлист", newPlaylist);
+  const getPlaylist = async () => {
+    const response = await fetch("/config/playlist.json");
+    if (!response.ok) {
+      console.log("error while reading playlist");
+      setPlaylist([]);
+      return;
+    }
+    const playlist = await response.json();
+    setPlaylist(playlist);
+    console.log("Установили новый плейлист", playlist);
   }
 
   useEffect(() => {
-    getPlaylsit();
+    getPlaylist();
   }, []);
 
   useEffect(() => {
@@ -31,36 +33,36 @@ export default function Home() {
       }
 
       if (playlist[index]) {
-	videoRef.current.addEventListener("ended", () => {
-        if (index === playlist.length - 1) {
-	  index = 0;
-	} else {
-	  index++;
-	}
-	console.log(playlist[index]);
-	videoRef.current.src = playlist[index];
-	videoRef.current.load();
-      });
+        videoRef.current.addEventListener("ended", () => {
+          if (index === playlist.length - 1) {
+            index = 0;
+          } else {
+            index++;
+          }
+          console.log(playlist[index]);
+          videoRef.current.src = playlist[index];
+          videoRef.current.load();
+        });
 
-      videoRef.current.addEventListener("error", (e) => {
-	console.log("error", e);
-      });
+        videoRef.current.addEventListener("error", (e) => {
+          console.log("error", e);
+        });
 
-      videoRef.current.addEventListener("waiting", (e) => {
-	console.log("waiting", e);
-      });
-      videoRef.current.addEventListener("stalled", (e) => {
-	console.log("stalled", e);
-      });
-      videoRef.current.addEventListener("suspend", (e) => {
-	console.log("suspend", e);
-      });
-      videoRef.current.addEventListener("abort", (e) => {
-	console.log("abort", e);
-      });
-      videoRef.current.addEventListener("emptied", (e) => {
-	console.log("emptied", e);
-      });
+        videoRef.current.addEventListener("waiting", (e) => {
+          console.log("waiting", e);
+        });
+        videoRef.current.addEventListener("stalled", (e) => {
+          console.log("stalled", e);
+        });
+        videoRef.current.addEventListener("suspend", (e) => {
+          console.log("suspend", e);
+        });
+        videoRef.current.addEventListener("abort", (e) => {
+          console.log("abort", e);
+        });
+        videoRef.current.addEventListener("emptied", (e) => {
+          console.log("emptied", e);
+        });
       }
     }
   }, [videoRef, playlist]);
@@ -127,13 +129,13 @@ export default function Home() {
         </div>
       </div>
 
-        <Script
-          src="/script.js"
-          strategy="lazyOnload" // или "afterInteractive", "beforeInteractive"
-          onLoad={() => {
-            console.log('Скрипт загружен!')
-          }}
-        />
-      </>
-    );
-  }
+      <Script
+        src="/script.js"
+        strategy="lazyOnload" // или "afterInteractive", "beforeInteractive"
+        onLoad={() => {
+          console.log('Скрипт загружен!')
+        }}
+      />
+    </>
+  );
+}
