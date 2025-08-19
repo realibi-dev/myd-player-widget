@@ -1,5 +1,6 @@
 import Script from "next/script";
 import {useEffect, useRef, useState} from "react";
+import {setTimeout} from "next/dist/compiled/@edge-runtime/primitives";
 
 export default function Home() {
   const videoRef = useRef(null);
@@ -60,12 +61,13 @@ export default function Home() {
         } else {
           index++;
         }
-
-        console.log("Следующее видео:", playlist[index]);
         video.src = playlist[index];
         videoContainerRef.current.classList.remove("hidden");
-        tabloRef.current.classList.add("hidden");
         video.play();
+      }, 9500);
+
+      setTimeout(() => {
+        tabloRef.current.classList.add("hidden");
       }, 10000);
     };
 
