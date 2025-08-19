@@ -48,7 +48,7 @@ export default function Home() {
 
     const video = videoRef.current;
     if (!video || playlist.length === 0) {
-      setPlaylist([]);
+      // setPlaylist([]);
       video.src = "";
 
       tabloInterval = setInterval(() => {
