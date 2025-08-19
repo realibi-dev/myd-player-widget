@@ -30,7 +30,7 @@ export default function Home() {
       }
 
       if (isPlaylistDifferent) {
-        setPlaylist(paths);
+        setPlaylist(paths.length > 0 ? paths : ["/opt/citydash/media/placeholder.mp4"]);
       }
     }, 500);
 
@@ -47,17 +47,7 @@ export default function Home() {
     console.log("Словили смену плейлиста");
 
     const video = videoRef.current;
-    if (!video || playlist.length === 0) {
-      // setPlaylist([]);
-      video.src = "";
-
-      tabloInterval = setInterval(() => {
-        tabloRef.current.classList.toggle("hidden");
-      }, 10000);
-      return;
-    } else {
-      clearInterval(tabloInterval);
-    }
+    if (!video || playlist.length === 0) return;
 
     let index = 0;
 
