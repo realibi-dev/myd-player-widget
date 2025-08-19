@@ -42,36 +42,51 @@ export default function Home() {
 
   useEffect(() => {
     console.log("Словили смену плейлиста");
-    if (videoRef.current) {
-      console.log("Videoref current ok");
-      let index = 0;
-      if (playlist.length) {
-        videoRef.current.src = playlist[index];
-        videoRef.current.load();
+
+    const video = videoRef.current;
+    if (!video || playlist.length === 0) return;
+
+    let index = 0;
+
+    const onEnded = async () => {
+      console.log("Видео закончилось, ждем 5 секунд...");
+      await sleep(5000);
+
+      if (index % 2 === 0) {
+        console.log("showing tablo");
+        tabloRef.current.classList.remove("hidden");
+        await sleep(10000);
+        tabloRef.current.classList.add("hidden");
+        console.log("removing tablo");
       }
 
-      if (playlist[index]) {
-        videoRef.current.addEventListener("ended", async () => {
-          await sleep(5000);
-          if (index % 2 === 0) {
-            console.log("showing tablo");
-            tabloRef.current.classList.remove("hidden");
-            await sleep(10000);
-            tabloRef.current.classList.add("hidden");
-            console.log("removing tablo");
-          }
-          if (index === playlist.length - 1) {
-            index = 0;
-          } else {
-            index++;
-          }
-          console.log(playlist[index]);
-          videoRef.current.src = playlist[index];
-          videoRef.current.play();
-        });
+      // Переход к следующему видео
+      if (index === playlist.length - 1) {
+        index = 0;
+      } else {
+        index++;
       }
-    }
-  }, [videoRef, playlist]);
+
+      console.log("Следующее видео:", playlist[index]);
+      video.src = playlist[index];
+      video.load();
+      video.play();
+    };
+
+    // Ставим первое видео
+    video.src = playlist[index];
+    video.load();
+    video.play();
+
+    // Подписка на событие
+    video.addEventListener("ended", onEnded);
+
+    // Удаляем обработчик при размонтировании или новом эффекте
+    return () => {
+      video.removeEventListener("ended", onEnded);
+    };
+  }, [playlist]);
+
 
   return (
     <>
