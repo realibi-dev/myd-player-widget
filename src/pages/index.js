@@ -57,12 +57,11 @@ export default function Home() {
           console.log("showing tablo");
           tabloRef.current.classList.remove("hidden");
           video.pause();
-          sleep(10000).then(() => {
+          setTimeout(() => {
             tabloRef.current.classList.add("hidden");
             video.play();
-            video.load();
             console.log("removing tablo");
-          });
+          }, 10000);
         }
 
         // Переход к следующему видео
