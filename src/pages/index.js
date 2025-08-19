@@ -52,18 +52,8 @@ export default function Home() {
     const onEnded = async () => {
       console.log("Видео закончилось, ждем 5 секунд...");
       videoContainerRef.current.classList.add("hidden");
+      tabloRef.current.classList.remove("hidden");
       setTimeout(() => {
-        if (index % 2 === 0) {
-          console.log("showing tablo");
-          tabloRef.current.classList.remove("hidden");
-          video.pause();
-          setTimeout(() => {
-            tabloRef.current.classList.add("hidden");
-            video.play();
-            console.log("removing tablo");
-          }, 10000);
-        }
-
         // Переход к следующему видео
         if (index === playlist.length - 1) {
           index = 0;
@@ -74,8 +64,9 @@ export default function Home() {
         console.log("Следующее видео:", playlist[index]);
         video.src = playlist[index];
         videoContainerRef.current.classList.remove("hidden");
+        tabloRef.current.classList.add("hidden");
         video.play();
-      }, 5000);
+      }, 10000);
     };
 
     // Ставим первое видео
