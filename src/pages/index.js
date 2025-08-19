@@ -50,26 +50,26 @@ export default function Home() {
 
     const onEnded = async () => {
       console.log("Видео закончилось, ждем 5 секунд...");
-      video.pause();
-      if (index % 2 === 0) {
-        console.log("showing tablo");
-        tabloRef.current.classList.remove("hidden");
-        tabloRef.current.classList.add("hidden");
-        console.log("removing tablo");
-      }
 
-      // Переход к следующему видео
-      if (index === playlist.length - 1) {
-        index = 0;
-      } else {
-        index++;
-      }
+      setTimeout(() => {
+        if (index % 2 === 0) {
+          console.log("showing tablo");
+          tabloRef.current.classList.remove("hidden");
+          tabloRef.current.classList.add("hidden");
+          console.log("removing tablo");
+        }
 
-      console.log("Следующее видео:", playlist[index]);
-      video.src = playlist[index];
-      await sleep(5000).then(() => {
+        // Переход к следующему видео
+        if (index === playlist.length - 1) {
+          index = 0;
+        } else {
+          index++;
+        }
+
+        console.log("Следующее видео:", playlist[index]);
+        video.src = playlist[index];
         video.play();
-      });
+      }, 5000);
     };
 
     // Ставим первое видео
