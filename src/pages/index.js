@@ -68,11 +68,27 @@ export default function Home() {
   }, [videoRef, playlist]);
 
   return (
-    <>
+      <>
+          <div className="tablo">
+              <div className="container">
+                  <div className="header">
+                      <span>✈️</span>
+                      <span>Ushyp ketýler</span>
+                  </div>
+                  <div id="content">
+                      <div className="loading">Загрузка данных...</div>
+                  </div>
+              </div>
+          </div>
       <div className="led-screen" id="ledScreen">
         <div className="video-wrapper">
           <video ref={videoRef} id="videoPlayer" autoPlay muted></video>
-        </div>
+      </div>
+              <div className="widget image1">
+                  <img
+                      src="/image/image 552x552.png"
+                  />
+              </div>
         <div className="widget navigation-widget">
           <div className="nav-image-container">
             <img
@@ -135,7 +151,15 @@ export default function Home() {
         onLoad={() => {
           console.log('Скрипт загружен!')
         }}
-      />
+          />
+          <Script
+              src="/tablo_script.js"
+              strategy="lazyOnload" // или "afterInteractive", "beforeInteractive"
+              onLoad={() => {
+                  console.log('Скрипт загружен!')
+              }}
+          />
+
     </>
   );
 }
