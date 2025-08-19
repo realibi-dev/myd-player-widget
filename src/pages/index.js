@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from "react";
 export default function Home() {
   const videoRef = useRef(null);
   const tabloRef = useRef(null);
+  const videoContainerRef = useRef(null);
 
   const [playlist, setPlaylist] = useState([]);
 
@@ -50,7 +51,7 @@ export default function Home() {
 
     const onEnded = async () => {
       console.log("Видео закончилось, ждем 5 секунд...");
-
+      videoContainerRef.current.classList.add("hidden");
       setTimeout(() => {
         if (index % 2 === 0) {
           console.log("showing tablo");
@@ -68,6 +69,7 @@ export default function Home() {
 
         console.log("Следующее видео:", playlist[index]);
         video.src = playlist[index];
+        videoContainerRef.current.classList.remove("hidden");
         video.play();
       }, 5000);
     };
@@ -100,7 +102,7 @@ export default function Home() {
         </div>
       </div>
       <div className="led-screen" id="ledScreen">
-        <div className="video-wrapper">
+        <div ref={videoContainerRef} className="video-wrapper">
           <video ref={videoRef} id="videoPlayer" autoPlay muted></video>
         </div>
         <div className="widget image1">
