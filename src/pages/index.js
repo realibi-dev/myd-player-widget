@@ -66,7 +66,7 @@ export default function Home() {
           }
           console.log(playlist[index]);
           videoRef.current.src = playlist[index];
-          videoRef.current.load();
+          videoRef.current.play();
         });
       }
     }
