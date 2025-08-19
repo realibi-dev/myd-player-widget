@@ -47,7 +47,7 @@ export default function Home() {
   useEffect(() => {
     setInterval(() => {
       getPlaylist();
-    }, 1000 * 3);
+    }, 1000 * 10);
   }, []);
 
   function sleep(ms) {
