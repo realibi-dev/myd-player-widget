@@ -149,8 +149,8 @@ body {
     font-size: 120px; /* Размер основной иконки */
     filter: drop-shadow(0 4px 8px rgba(255, 193, 7, 0.3));
     size: 120px;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -251,7 +251,7 @@ body {
 
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-size: 42px;
     font-weight: 700;
     display: flex;
@@ -294,10 +294,11 @@ th {
 }
 
 td {
-    padding: 12px;
+    padding: 16px 16px 16px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 32px;
     font-weight: 600;
+    text-align: left;
 }
 .status {
     padding: 12px;
@@ -316,11 +317,11 @@ td:nth-child(1) {
 }
 
 td:nth-child(2) {
-    width: 25%;
+    width: 15%;
 }
 
 td:nth-child(3) {
-    width: 25%;
+    width: 20%;
 }
 
 td:nth-child(4) {
@@ -328,9 +329,9 @@ td:nth-child(4) {
 }
 
 td:nth-child(5) {
-    width: 15%;
+    width: 10%;
     font-weight: 600;
-    text-align: right;
+    /*text-align: right;*/
 }
 
 .status-scheduled {

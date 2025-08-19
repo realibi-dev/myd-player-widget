@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from "react";
 
 export default function Home() {
   const videoRef = useRef(null);
+  const tabloRef = useRef(null);
 
   const [playlist, setPlaylist] = useState([]);
 
@@ -15,12 +16,17 @@ export default function Home() {
     }
     const playlist = await response.json();
     setPlaylist(playlist);
+
     console.log("Установили новый плейлист", playlist);
   }
 
   useEffect(() => {
     getPlaylist();
   }, []);
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   useEffect(() => {
     console.log("Словили смену плейлиста");
@@ -33,7 +39,14 @@ export default function Home() {
       }
 
       if (playlist[index]) {
-        videoRef.current.addEventListener("ended", () => {
+        videoRef.current.addEventListener("ended", async () => {
+          if (index % 2 === 0) {
+            console.log("showing tablo");
+            tabloRef.current.classList.remove("hidden");
+            await sleep(10000);
+            tabloRef.current.classList.add("hidden");
+            console.log("removing tablo");
+          }
           if (index === playlist.length - 1) {
             index = 0;
           } else {
@@ -43,52 +56,32 @@ export default function Home() {
           videoRef.current.src = playlist[index];
           videoRef.current.load();
         });
-
-        videoRef.current.addEventListener("error", (e) => {
-          console.log("error", e);
-        });
-
-        videoRef.current.addEventListener("waiting", (e) => {
-          console.log("waiting", e);
-        });
-        videoRef.current.addEventListener("stalled", (e) => {
-          console.log("stalled", e);
-        });
-        videoRef.current.addEventListener("suspend", (e) => {
-          console.log("suspend", e);
-        });
-        videoRef.current.addEventListener("abort", (e) => {
-          console.log("abort", e);
-        });
-        videoRef.current.addEventListener("emptied", (e) => {
-          console.log("emptied", e);
-        });
       }
     }
   }, [videoRef, playlist]);
 
   return (
-      <>
-          <div className="tablo">
-              <div className="container">
-                  <div className="header">
-                      <span>✈️</span>
-                      <span>Ushyp ketýler</span>
-                  </div>
-                  <div id="content">
-                      <div className="loading">Загрузка данных...</div>
-                  </div>
-              </div>
+    <>
+      <div ref={tabloRef} className="tablo hidden">
+        <div className="container">
+          <div className="header">
+            <span>✈️</span>
+            <span>Ushyp ketýler</span>
           </div>
+          <div id="content">
+            <div className="loading">Загрузка данных...</div>
+          </div>
+        </div>
+      </div>
       <div className="led-screen" id="ledScreen">
         <div className="video-wrapper">
           <video ref={videoRef} id="videoPlayer" autoPlay muted></video>
-      </div>
-              <div className="widget image1">
-                  <img
-                      src="/image/image 552x552.png"
-                  />
-              </div>
+        </div>
+        <div className="widget image1">
+          <img
+            src="/image/image 552x552.png"
+          />
+        </div>
         <div className="widget navigation-widget">
           <div className="nav-image-container">
             <img
@@ -151,14 +144,14 @@ export default function Home() {
         onLoad={() => {
           console.log('Скрипт загружен!')
         }}
-          />
-          <Script
-              src="/tablo_script.js"
-              strategy="lazyOnload" // или "afterInteractive", "beforeInteractive"
-              onLoad={() => {
-                  console.log('Скрипт загружен!')
-              }}
-          />
+      />
+      <Script
+        src="/tablo_script.js"
+        strategy="lazyOnload" // или "afterInteractive", "beforeInteractive"
+        onLoad={() => {
+          console.log('Скрипт загружен!')
+        }}
+      />
 
     </>
   );

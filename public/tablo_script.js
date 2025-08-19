@@ -38,7 +38,7 @@
               <td>${flight.flight}</td>
               <td>${flight.destination}</td>
               <td>${flight.airline}</td>
-              <td className="status ${statusClass}">${flight.status}</td>
+              <td class="status ${statusClass}">${flight.status}</td>
               <td>${flight.time}</td>
             </tr>
           `;
@@ -53,5 +53,5 @@
     }
 }
 
-document.addEventListener('DOMContentLoaded', fetchFlightData);
+fetchFlightData();
 setInterval(fetchFlightData, 30000); // Обновление каждые 30 секунд

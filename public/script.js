@@ -128,7 +128,7 @@ async function fetchWeatherData() {
 
             // 3. Обновляем текущую погоду
             const current = data.current;
-            const temp = current.temp_c;
+            const temp = Math.round(current.temp_c);
             // Используем иконку из API
             document.getElementById('weather-temp-main').textContent = `${temp}°`;
             // Создаем тег img для иконки
