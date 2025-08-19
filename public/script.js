@@ -89,7 +89,7 @@ function init() {
     ledScreen.classList.add('size-f3');
 
     fetchExchangeRates();
-    setInterval(fetchExchangeRates, 300000); // Каждые 5 минут
+    setInterval(fetchExchangeRates, 1000 * 60);
 
     setTimeout(() => {
         nextFrame();
@@ -163,9 +163,9 @@ function init() {
     fetchExchangeRates();
     // Получаем погоду и устанавливаем таймеры
     fetchWeatherData();
-    setInterval(fetchWeatherData, 300000); // Каждые 5 минут обновляем погоду
+    setInterval(fetchWeatherData, 1000 * 60);
     updateTime();
-    setInterval(updateTime, 60000); // Каждую минуту обновляем время
+    setInterval(updateTime, 1000 * 60);
     // Запускаем смену кадров
     setTimeout(() => {
         nextFrame();
