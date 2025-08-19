@@ -63,7 +63,7 @@ export default function Home() {
         video.src = playlist[index];
         videoContainerRef.current.classList.remove("hidden");
         video.play();
-      }, 8000);
+      }, 9200);
 
       setTimeout(() => {
         tabloRef.current.classList.add("hidden");
